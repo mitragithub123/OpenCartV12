@@ -1,0 +1,48 @@
+Create config.properties file in src/test/resources directory
+----------------------------------------------------------------
+prodUrl=https://tutorialsninja.com/demo/
+localUrl=http://localhost/shop/upload/
+browser1=chrome
+browser2=firefox
+email=andolasoft.user133@gmail.com
+password=mitra@1234
+#exeEnv=remote
+exeEnv=local
+os1=windows
+#os2=linux
+#os3=mac
+
+Load Properties in BaseTest.java
+-----------------------------------
+public class BaseTest {
+	public Properties property;
+	@BeforeClass
+	public void setup() throws IOException {
+		FileInputStream file = new FileInputStream(".\\src\\test\\resources\\config.properties");
+		property = new Properties();
+		property.load(file);
+		file.close(); 
+	}
+}
+
+To use
+--------
+Need to extend BaseTest
+To get value
+property.getProperty("key")
+e.g 
+
+public class SampleTest extends BaseTest {
+    @Test
+    public void testExample() {
+        String browser = property.getProperty("browser1");
+        String prodUrl = property.getProperty("prodUrl");
+        }
+}
+
+
+
+
+
+
+

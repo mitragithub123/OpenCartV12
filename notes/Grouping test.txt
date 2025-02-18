@@ -1,0 +1,32 @@
+Define Groups in Test Methods
+--------------------------------
+public class MyTests {
+    @Test(groups = { "smoke" })
+    public void smokeTest1() {
+      
+    }
+    @Test(groups = { "regression" })
+    public void regressionTest1() {   
+    }
+    @Test(groups = { "smoke", "regression" })
+    public void smokeAndRegressionTest1() {
+        
+    }
+}
+
+Include Groups in TestNG XML Configuration
+---------------------------------------------
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Test Suite">
+    <test name="Exclude Regression Tests">
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <exclude name="regression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="testCases.TC001_AccountRegistrationTest"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,69 @@
+Add Dependencies in pom.xml
+----------------------------------------
+Add the Apache POI dependencies to your pom.xml to handle Excel files:
+
+<dependency>
+	<groupId>org.apache.poi</groupId>
+	<artifactId>poi</artifactId>
+	<version>5.2.5</version>
+</dependency>
+
+<dependency>
+	<groupId>org.apache.poi</groupId>
+	<artifactId>poi-ooxml</artifactId>
+	<version>5.2.5</version>
+</dependency>
+
+Create a Configuration file as log4j2.xml in src/test/resources
+---------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Bind to grammar/schema... -->
+<?xml-model href="log4j2.dtd"?>
+<Configuration status="WARN">
+	<Properties>
+		<Property name="basePath">./logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<RollingFile name="File" fileName="${basePath}/automation.log"
+			filePattern="${basePath}/automation-%d{yyyy-MM-dd}.log">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<SizeBasedTriggeringPolicy size="5000" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="debug"><!-- Here you can use multiple log levels All <
+			Trace < Debug < Info < Warn < Error < Fatal < Off  -->
+			<AppenderRef ref="File" />
+			<!-- <AppenderRef ref="Console"/> -->
+		</Root>
+	</Loggers>
+</Configuration>
+
+
+Update BaseTest.java for Logging
+-----------------------------------
+public class BaseTest {
+	public Logger logger;
+	@BeforeClass
+	public void setup() throws IOException {
+		logger = LogManager.getLogger(this.getClass());
+	}
+}
+
+To use in test case files
+--------------------------
+Need to extend BaseTest
+logger.info("Test started");
+
+
+
+
+
+
+
+

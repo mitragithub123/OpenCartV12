@@ -1,0 +1,183 @@
+Push the code
+----------------
+git bash,
+
+Go to project structure
+git init (Create a new local repository)
+
+Only once
+git config --global user.name "Your New Name"
+git config --global user.email "yournewemail@example.com"
+
+git add . (Add all files)
+git add <filename> (Add a Specific File)
+git add <file1> <file2> <file3> (Add multiple Files)
+git add *.java (File names ending with .java)
+
+git status (Status check)
+
+git commit -m "Commit message" (Commit code in to local git repository)
+
+Only once
+git remote add origin https://github.com/mitragithub123/Myrepo.git (Connect local repository with remote)
+
+git push origin master (Push code in to remote repository)
+While doing 1st time push, it will ask token.
+Generate token from github.
+
+git pull origin master --allow-unrelated-histories
+
+
+How to add .gitignore
+------------------------
+Create a .gitignore file
+Add these to exclude
+
+.settings/
+target/
+test-output/
+.classpath
+.project
+reports/
+logs/
+screenshots/
+
+In git bash,
+--------------
+git rm -r --cached .settings target test-output .classpath .project reports logs screenshots
+git commit -m "Remove files and directories from tracking as per .gitignore"
+git rm -r --cached .
+git commit -m "Reapply .gitignore rules"
+git add .
+git commit -m "msg"
+git push origin master
+
+***
+If screenshots folder is not added in .gitignore. Now it is pushed to live.
+Then add screenshots in .gitignore
+in git bash,
+git rm -r --cached screenshots/
+git commit -am "Stop tracking screenshots folder and add to .gitignore"  (Commit in one step)
+git push origin master
+
+
+Revert a commit
+------------------
+git log --oneline (Revert the commit locally)
+git revert bfc6827/git revert HEAD (If you're reverting the most recent commit)
+git push origin branch-name (Push the revert commit to the remote)
+git log --oneline (Verifying the change)
+
+
+Write your commit message: If you are okay with the auto-generated commit message
+(which looks like Revert "Comments add"), you can proceed with saving and exiting the editor.
+
+Save and exit the editor (Vim steps):
+
+Press Esc to ensure you're in command mode.
+Type :wq and press Enter.
+This will save the commit message and close the editor, completing the revert operation.
+
+
+Reset a commit
+------------------
+git log --oneline
+git reset --hard bfc6827
+git push origin <branch-name> --force
+
+Rename the current (checked-out) branch
+-------------------------------------------
+git checkout your-branch-name
+git branch -m new-branch-name
+git push origin new-branch-name
+git push origin --delete new-branch-name
+
+Rename a different branch
+--------------------------
+git branch -m old-branch-name new-branch-name
+git push origin new-branch-name
+git push origin --delete new-branch-name
+
+Delete a remote branch
+-----------------------------------------
+git push origin --delete branch-name
+
+Delete a local branch
+------------------------
+git branch -d branch-name (If the branch has already been merged with another branch, like master or main)
+git branch -D branch-name (If the branch hasn’t been merged and you still want to delete it)
+
+List all local branches
+--------------------------
+git branch
+
+List all remote branches
+--------------------------
+git branch -r
+
+List all local branches & remote branches
+---------------------------------------------
+git branch -a
+
+Use Cases for git stash
+--------------------------
+--You are working on a feature and need to switch to another branch to fix a bug but have uncommitted changes.
+git stash
+git checkout bugfix-branch
+# After fixing the bug, return to the feature branch
+git checkout feature-branch
+git stash pop
+
+--You need to pull changes from the remote repository but have uncommitted local changes.
+git stash
+git pull origin main
+git stash pop
+
+git stash list (View a list of stashed changes)
+ 
+git stash pop stash@{0} (Reapply a specific stash (e.g., the first one))
+
+git stash clear (Remove all stashes)
+
+
+Cherry pick
+------------
+I need to apply specific changes from the "branch-qa" branch to the "master" branch, but not all changes. Here's how I'll use git cherry-pick:
+
+Create and switch to the "branch-qa" branch:
+git switch -c branch-qa
+
+Make changes, add them, commit, and push to "branch-qa" multiple times:
+Commit 1
+Commit 2
+Commit 3
+
+Obtain the hashes of the commits using:
+git log --oneline
+Switch to the "master" branch:
+
+Switch to master
+git switch master
+Cherry-pick a specific commit (e.g., c2df70c) from "branch-qa" to "master":
+
+git cherry-pick c2df70c
+Add, commit, and push the changes to "master".
+
+(Optional) Resolve Merge Conflicts
+If there are conflicts during the cherry-pick, Git will pause and prompt you to resolve them. After resolving:
+
+Mark the conflicts as resolved:
+git add <conflicted-files>
+
+Continue the cherry-pick:
+git cherry-pick --continue
+
+Abort the cherry-pick:
+git cherry-pick --abort
+
+
+
+
+
+
+

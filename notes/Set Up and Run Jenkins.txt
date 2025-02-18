@@ -1,0 +1,146 @@
+1. Download and Start Jenkins
+-------------------------------
+Download Jenkins WAR File:
+
+Visit Jenkins Download Page: https://www.jenkins.io/download/
+Download the Jenkins WAR file.
+
+When you run Jenkins using a WAR file, the program will execute in headed mode.
+On the other hand, if you install Jenkins using an installer (e.g., via the Jenkins Windows Installer),
+the program will execute in headless mode.
+
+Start Jenkins:
+Place the downloaded jenkins.war file in a dedicated folder.
+Open Command Prompt in that folder.
+Run the following command:
+java -jar jenkins.war
+
+Unlock Jenkins:
+When Jenkins starts, it will prompt for an unlock key.
+Retrieve the unlock key from:
+C:\Users\Chandan\.jenkins\secrets\initialAdminPassword
+Enter the unlock key in the Jenkins setup page.
+
+Install Plugins:
+Choose to install the suggested plugins or select custom plugins based on your requirements.
+
+2. Configure Jenkins Tools
+-----------------------------
+Git Installation:
+Navigate to Manage Jenkins > Global Tool Configuration > Git installations.
+Add a new Git installation:
+Name: GIT_HOME
+Path to Git executable: C:\Program Files\Git\bin\git.exe
+
+JDK Installation:
+In the same Global Tool Configuration page, configure the JDK:
+Name: JAVA_HOME
+JAVA_HOME: C:\Program Files\Java\jdk-21
+
+Maven Installation:
+Also in the Global Tool Configuration page, configure Maven:
+Name: MAVEN_HOME
+MAVEN_HOME: C:\Program Files\Maven\apache-maven-3.9.6
+
+3. Install Additional Plugins:
+-----------------------------
+Navigate to Manage Jenkins > Manage Plugins > Available Plugins.
+Install the following plugins:
+Maven Integration
+Test Results Analyzer
+
+4. Run a Maven Project from a Remote GitHub Repository
+---------------------------------------------------------
+Create a New Maven Job:
+Go to Jenkins Dashboard > New Item.
+Enter a name, select Maven project, and click OK.
+
+Configure Source Code Management:
+Under Source Code Management, select Git.
+Enter the repository URL:
+https://github.com/mitragithub123/Myrepo.git
+Set Credentials to None (since the repository is public).
+
+Specify the Branch:
+Under Branches to build, set the Branch Specifier to:
+*/Opencart-demo-web-automation
+
+Configure Build Settings:
+Under Build, set:
+Root POM: pom.xml
+Goals and options: test
+Click Save.
+Go to the project dashboard and click Build Now to trigger the build.
+
+5. Run a Maven Project from a Local pom.xml
+----------------------------------------------
+Create a New Maven Job:
+Go to Jenkins Dashboard > New Item.
+Enter a name, select Maven project, and click OK.
+
+Configure Build Settings:
+Under Build, set:
+Root POM: C:\Users\Chandan\eclipse-workspace\OpenCartV12\pom.xml
+Goals and options: test
+Click Save.
+Go to the project dashboard and click Build Now to trigger the build.
+
+6. Run a Free-Style Project Using a run.bat File
+-------------------------------------------------
+Create a New Free-Style Job:
+Go to Jenkins Dashboard > New Item.
+Enter a name, select Freestyle project, and click OK.
+
+Configure Build Steps:
+Under Build Steps, select Execute Windows batch command.
+Set the command to:
+C:\Users\Chandan\eclipse-workspace\OpenCartV12\run.bat
+Click Save.
+Go to the project dashboard and click Build Now to trigger the build.
+
+
+7. To send email reports on build fail
+-------------------------------------------
+Email Extension Plugin (Make sure this plugin is installed)
+
+Navigate to Manage Jenkins > System
+System Admin e-mail address: Mitra bhanu Prusty <nobody@nowhere>
+
+Extended E-mail Notification:
+SMTP server: smtp.gmail.com
+Port: 465 (If ssl)
+
+Advanced
+Check SSL
+Default Content:
+Hi,
+I hope you are doing well. Please find the automation test results below.
+$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+Check console output at $BUILD_URL to view the results.
+
+Best Regards,
+Mitra bhanu Prusty
+QA
+8249493741
+
+E-mail Notification:
+SMTP server: smtp.gmail.com
+Default user e-mail suffix: @gmail.com
+Advanced
+Use SMTP Authentication checked
+User Name: mitrabhanu.prusty@andolasoft.us
+Password:
+Use SSL
+Port: 465
+Reply-To Address: mitrabhanu.prusty@andolasoft.us
+Test configuration by sending test e-mail
+
+Click send
+
+For more,
+https://www.youtube.com/watch?v=GAjxnkH6Tt4
+
+
+
+

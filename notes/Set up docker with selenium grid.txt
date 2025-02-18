@@ -1,0 +1,97 @@
+Here are the steps to set up and use Docker with Selenium Grid on Windows:
+
+Download and Install Docker Desktop:
+Visit the Docker Desktop installation page for Windows.
+Download Docker Desktop for Windows (x86_64).
+Install Docker Desktop and restart your computer if prompted.
+Open Docker Desktop to complete the installation.
+Check the docker vesion: docker version/ docker -v (in cmd)
+
+Start Docker Services:
+Go to Windows > Services > Docker Desktop Services.
+Start the Docker Desktop Services.
+
+Pull Selenium Docker Images:
+Open Command Prompt (cmd) and run the following commands to pull the necessary Docker images:
+docker pull selenium/hub
+docker pull selenium/node-chrome
+docker pull selenium/node-firefox
+
+Configure Docker Compose:
+Place the docker-compose.yaml file in your Eclipse project directory.
+
+docker-compose.yaml
+--------------------
+services:
+  selenium-hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444" # Maps the host's port 4444 to the container's port 4444
+    networks:
+      - grid
+
+  node-chrome:
+    image: selenium/node-chrome
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    depends_on:
+      - selenium-hub # Ensures the hub starts before the node
+    networks:
+      - grid
+
+  node-firefox:
+    image: selenium/node-firefox
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    depends_on:
+      - selenium-hub # Ensures the hub starts before the node
+    networks:
+      - grid
+
+networks:
+  grid:
+    driver: bridge
+--------------------------
+
+Run Docker Compose:
+Open Command Prompt in the directory where docker-compose.yaml is located.
+Execute the command:
+docker-compose up
+
+Verify Selenium Grid:
+Open Chrome and navigate to: http://localhost:4444/grid/console ( Get this from Docker Desktop)
+This page will show the status of the Selenium Grid hub and nodes.
+
+Scale the Number of Nodes:
+To increase the number of Chrome nodes, run:
+docker-compose scale chrome=3
+
+Run Your TestNG Tests:
+Run your TestNG XML file and ensure that remote is selected in your config.properties file.
+
+Stop and Clean Up:
+To stop the Selenium Grid and remove the created containers, run:
+docker-compose down
+
+-------------
+Navigate to the Directory Containing the grid JAR File
+Open cmd here
+In cmd
+java -jar selenium-server-4.23.1.jar standalone
+A Url will be generated
+http://192.168.2.173:4444 (Open this in browser)
+Match this url in BaseTest
+Run testng.xml
+
+To stop server, in cmd: CTRL+C
+--------------------
+Reference
+
+https://www.youtube.com/watch?v=XB550hmwzLM&t=3154s
+https://www.youtube.com/watch?v=T7PjgtSpX-o&t=2321s
+
+

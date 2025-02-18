@@ -1,0 +1,82 @@
+Maven compiler plugin
+https://maven.apache.org/plugins/maven-compiler-plugin/plugin-info.html
+
+Maven surefire pugin
+https://maven.apache.org/surefire/maven-surefire-plugin/plugin-info.html
+
+Add plugins from these, and place in pom.xml above dependencies.
+
+<build>
+    <pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>master.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </pluginManagement>
+</build>
+
+Run from pom.xml
+-------------------
+Righ click>>run as maven test
+
+Run from cmd
+-------------
+Install maven at OS level
+https://maven.apache.org/download.cgi
+Binary zip archive>>apache-maven-3.9.9-bin.zip
+Download it and install
+To check (mvn -version)
+
+Set it in environment variables
+System variables
+MAVEN_HOME (C:\Program Files\Maven\apache-maven-3.9.6)
+In path (%MAVEN_HOME%\bin)
+
+Go to automation folder location, open cmd
+mvn test
+This can be also automated.
+
+Go to project location in file.
+Here C:\Users\Chandan\eclipse-workspace\OpenCartV12
+Here create a file run.bat and edit it with notepad++
+cd C:\Users\Chandan\eclipse-workspace\OpenCartV12
+mvn test
+Add these lines in run.bat and save.
+In file, click run.bat
+
+
+
+# Running a single class (from cmd)
+Go to project location
+mvn test -Dtest=MyClassName
+mvn test -Dtest=TC001_AccountRegistrationTest
+
+# Running a single test method (from cmd)
+mvn test -Dtest=MyClassName#myTestMethod
+
+
+
+
+
+
+
+
+
+
+
+
+
+
